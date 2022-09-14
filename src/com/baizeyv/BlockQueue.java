@@ -4,6 +4,10 @@ import java.util.LinkedList;
 
 public class BlockQueue<T> {
 
+    static Object put_lock = new Object();
+
+    static Object getPut_lock = new Object();
+
     /**
      * Block Queue Max Capacity
      */
