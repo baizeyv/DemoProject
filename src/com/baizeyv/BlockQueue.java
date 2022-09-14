@@ -35,6 +35,7 @@ public class BlockQueue<T> {
             wait();
         }
         list.add(data);
+        System.out.println("PUT: " + data);
         notifyAll();
     }
 
@@ -43,6 +44,7 @@ public class BlockQueue<T> {
             wait();
         }
         T res = list.remove(0);
+        System.out.println("GET: " + res);
         notifyAll();
         return res;
     }
