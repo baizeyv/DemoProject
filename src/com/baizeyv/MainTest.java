@@ -1,5 +1,6 @@
 package com.baizeyv;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class MainTest {
@@ -13,10 +14,11 @@ public class MainTest {
 
     public static void moreThanMaxTest() throws Exception {
         BlockQueue<Integer> blockQueue = new BlockQueue<>(10);
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 12; i++) {
             new Thread(() -> {
                 try {
-                    int tmp = 1;
+                    Random rd = new Random();
+                    int tmp = rd.nextInt(100);
                     blockQueue.putInto(tmp);
                 } catch (Exception e) {
                 }
@@ -38,7 +40,8 @@ public class MainTest {
         for (int i = 0; i < 5; i++) {
             new Thread(() -> {
                 try {
-                    int tmp = 1;
+                    Random rd = new Random();
+                    int tmp = rd.nextInt(100);
                     blockQueue.putInto(tmp);
                 } catch (Exception e) {
                 }
@@ -69,7 +72,8 @@ public class MainTest {
 
         new Thread(() -> {
             try {
-                int tmp = 1;
+                Random rd = new Random();
+                int tmp = rd.nextInt(100);
                 blockQueue.putInto(tmp);
             } catch (Exception e) {
             }

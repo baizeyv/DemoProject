@@ -37,10 +37,10 @@ public class BlockQueue<T> {
     public void putInto(T data) throws Exception {
         synchronized (put_lock) {
             while (this.list.size() >= this.max) {
+                System.out.println("PUT WAIT ?");
                 get_lock.wait();
             }
         }
-
         list.add(data);
         System.out.println("PUT: " + data);
         put_lock.notify();
