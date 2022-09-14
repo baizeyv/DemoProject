@@ -6,7 +6,7 @@ public class BlockQueue<T> {
 
     static Object put_lock = new Object();
 
-    static Object getPut_lock = new Object();
+    static Object get_lock = new Object();
 
     /**
      * Block Queue Max Capacity
@@ -34,20 +34,29 @@ public class BlockQueue<T> {
         this.max = 10;
     }
 
-    public synchronized void putInto(T data) throws Exception {
-        while (this.list.size() >= this.max) {
-            wait();
+    public void putInto(T data) throws Exception {
+        synchronized (put_lock) {
+            while (this.list.size() >= this.max) {
+                get_lock.wait();
+            }
         }
+
         list.add(data);
-        notifyAll();
+        System.out.println("PUT: " + data);
+        put_lock.notify();
+        get_lock.notify();
     }
 
-    public synchronized T getFrom() throws Exception {
-        while (this.list.size() <= 0) {
-            wait();
+    public T getFrom() throws Exception {
+        synchronized (get_lock) {
+            while (this.list.size() <= 0) {
+                put_lock.wait();
+            }
         }
         T res = list.remove(0);
-        notifyAll();
+        System.out.println("GET: " + res);
+        get_lock.notify();
+        put_lock.notify();
         return res;
     }
 

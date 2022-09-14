@@ -1,6 +1,5 @@
 package com.baizeyv;
 
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class MainTest {
@@ -19,16 +18,15 @@ public class MainTest {
                 try {
                     int tmp = 1;
                     blockQueue.putInto(tmp);
-                    System.out.println("put:" + tmp);
                 } catch (Exception e) {
                 }
             }).start();
         }
         TimeUnit.SECONDS.sleep(2);
+        System.out.println("-----------");
         new Thread(() -> {
             try {
-                Integer tmp = blockQueue.getFrom();
-                System.out.println("get:" + tmp);
+                blockQueue.getFrom();
             } catch (Exception e) {
             }
 
@@ -42,7 +40,6 @@ public class MainTest {
                 try {
                     int tmp = 1;
                     blockQueue.putInto(tmp);
-                    System.out.println("put:" + tmp);
                 } catch (Exception e) {
                 }
             }).start();
@@ -51,8 +48,7 @@ public class MainTest {
         for (int i = 0; i < 5; i++) {
             new Thread(() -> {
                 try {
-                    Integer tmp = blockQueue.getFrom();
-                    System.out.println("get:" + tmp);
+                    blockQueue.getFrom();
                 } catch (Exception e) {
                 }
             }).start();
@@ -62,8 +58,7 @@ public class MainTest {
 
         new Thread(() -> {
             try {
-                Integer tmp = blockQueue.getFrom();
-                System.out.println("get:" + tmp);
+                blockQueue.getFrom();
             } catch (Exception e) {
             }
 
@@ -76,7 +71,6 @@ public class MainTest {
             try {
                 int tmp = 1;
                 blockQueue.putInto(tmp);
-                System.out.println("put:" + tmp);
             } catch (Exception e) {
             }
         }).start();
