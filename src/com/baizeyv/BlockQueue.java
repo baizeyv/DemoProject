@@ -35,28 +35,31 @@ public class BlockQueue<T> {
     }
 
     public void putInto(T data) throws Exception {
-        synchronized (put_lock) {
+        synchronized (get_lock) {
             while (this.list.size() >= this.max) {
                 System.out.println("PUT WAIT ?");
                 get_lock.wait();
             }
+            list.add(data);
+            System.out.println("PUT: " + data);
         }
-        list.add(data);
-        System.out.println("PUT: " + data);
-        put_lock.notify();
-        get_lock.notify();
+        synchronized (put_lock) {
+            put_lock.notify();
+        }
     }
 
     public T getFrom() throws Exception {
-        synchronized (get_lock) {
+        T res;
+        synchronized (put_lock) {
             while (this.list.size() <= 0) {
                 put_lock.wait();
             }
+            res = list.remove(0);
+            System.out.println("GET: " + res);
         }
-        T res = list.remove(0);
-        System.out.println("GET: " + res);
-        get_lock.notify();
-        put_lock.notify();
+        synchronized (get_lock) {
+            get_lock.notify();
+        }
         return res;
     }
 
