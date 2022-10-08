@@ -1,4 +1,4 @@
-package com.baizeyv.MultiThread;
+package com.baizeyv.multiThread;
 
 import java.util.concurrent.Callable;
 
